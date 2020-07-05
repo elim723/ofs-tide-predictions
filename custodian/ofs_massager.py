@@ -41,13 +41,13 @@ def read_one_file (afile):
     lats = one_data.variables['lat_rho'].data
     lons = one_data.variables['lon_rho'].data
     
-    # collect water level - only 6 hours
-    heights = one_data.variables['zeta'].data[:6, :].T # meters; MLLW
+    # collect water level - only 6 hours i.e. 10 * 6
+    heights = one_data.variables['zeta'].data[:60, :].T # meters; MLLW
 
     # collect time
     start_min = one_data.variables['dstart'].data * n_minutes_per_day
     start_day = ofs_start_date + pandas.offsets.Minute (start_min) 
-    times = [start_day + index * pandas.offsets.Minute (60) for index in range (heights.shape[1])]
+    times = [start_day + index * pandas.offsets.Minute (6) for index in range (heights.shape[1])]
 
     # Close file before leaving
     one_data.close ()
@@ -98,7 +98,7 @@ def plot_one_file (data):
 
     ##  Format x-axis
     axis.set_xlim ([min(xvalues), max(xvalues)])
-    is_xticks = xvalues % 876 == 0
+    is_xticks = xvalues % 8760 == 0
     axis.set_xticks (xvalues[is_xticks])    
     axis.get_xaxis ().set_ticklabels ([])
     times = numpy.array (list (data.index))
