@@ -180,7 +180,7 @@ def plot_a_prediction (station, distance, data):
     axis.legend (loc=2, prop={'size':10})
     ##  Format x-axis
     axis.set_xlim ([min(xvalues), max(xvalues)])
-    is_xticks = xvalues % 876 == 0
+    is_xticks = xvalues % 8760 == 0
     axis.set_xticks (xvalues[is_xticks])    
     axis.get_xaxis ().set_ticklabels ([])
     ##  Format y-axis
